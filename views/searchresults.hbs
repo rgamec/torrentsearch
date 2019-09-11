@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Search results for "{{searchquery}}"</title>
+</head>
+<body>
+    <h1>Search results for "{{searchquery}}" (found {{searchresults.length}})</h1>
+    <ul>
+        {{#each searchresults}}
+        <li><a href="{{this.magnetLink}}">{{this.description}}</a> ({{this.size}}) (S: {{this.seeders}} L: {{this.leechers}})</li>
+        {{/each}}
+    </ul>
+</body>
+</html>
