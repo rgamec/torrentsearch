@@ -1,0 +1,19 @@
+{
+  "name": "torrentsearch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "torrentsearch.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "async": "^3.1.0",
+    "chalk": "^2.4.2",
+    "command-exists": "^1.2.8",
+    "prompts": "^2.2.1",
+    "request": "^2.88.0",
+    "yargs": "^14.0.0"
+  }
+}
