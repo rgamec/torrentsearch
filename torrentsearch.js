@@ -56,6 +56,7 @@ try {
 }
 
 
+
 const searchTracker = (tracker, query) => {
     query = query.slice(1)
                  .join(' ')
@@ -75,7 +76,30 @@ const searchTracker = (tracker, query) => {
                     if (displayed++ == amount-1) break
                 }
             }
-            outputResults(6, response)
+            // outputResults(6, response)
+            // outputResultsNew(response)
+
+            (async (response) => {
+                let transformResponse = []
+            
+                for (let result of response.slice(0,5)){
+                    let transformedResult = {}
+                    transformedResult.title = result.description.slice(0,50) + ' (' + result.size + ') '
+                    transformedResult.title += `S: ${result.seeders} L: ${result.leechers}`
+                    transformedResult.value = result.magnetLink
+                    transformResponse.push(transformedResult)
+                }
+            
+                const selectedTorrent = await prompts({
+                    type: 'select',
+                    name: 'torrent',
+                    message: 'The following torrents were found:',
+                    choices: transformResponse
+                });
+            
+                verbose("User entered: " + selectedTorrent.torrent);
+                //return selectedTorrent
+            })(response);
         }
     })
 }
@@ -98,19 +122,3 @@ yargs.command({
 })
 
 yargs.parse()
-
-
-//  check if aria2c is installed, if not advise how - done
-//  Warn if default download dir not set, allow user to enter dir 
-//  warn if dir not writeable
-//  dir to be saved to .torrentsearch dotfile, warn if unable
-//  make request to piratebay with search terms
-//  attempt above several times if unsuccessful
-//  once we have result, parse page for results
-//  if no results, advise and quit
-//  otherwise display list of top five results and let user select between them
-//  when result selected, call aria2c on the magnet URL and dump torrent file to download dir
-//  then rtorrent picks up the rest
-
-// # Parse command line arguments
-// # support -feelinglucky switch to download top result
