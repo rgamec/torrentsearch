@@ -2,12 +2,20 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 const trackersearch = require('./lib/trackersearch.js')
+const responseTime = require('response-time') // to test Redis performance
 
 app.set('view engine', 'hbs')
 const  urlencodedParser = bodyParser.urlencoded({ extended: false })
 
+const viewConfig = {
+    applicationPath: '/torrentsearch/'
+}
+
+app.use(responseTime());
+
+
 app.get('/', (req, res) => {
-    res.render('index')
+    res.render('index', {viewConfig})
 })
 
 app.post('/search', urlencodedParser, (req, res) => {
@@ -24,7 +32,7 @@ app.post('/search', urlencodedParser, (req, res) => {
 })
 
 app.get('*', (req, res) => {
-    res.status(404).send("File not found")
+    res.status(404).send("File not found - tried to retrieve " + req.path)
 })
 
-app.listen(3000)
+app.listen(process.env.PORT || 3000)
